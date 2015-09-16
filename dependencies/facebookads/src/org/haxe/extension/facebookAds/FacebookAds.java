@@ -32,12 +32,16 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 	protected static InterstitialAd interstitialAd;
 	protected static final String TAG = "FacebookAds";
 	protected static AdView adView;
-	
-	public static void init(HaxeObject callback) {
+	protected static String interstitialID = null;
+
+	public static void init(boolean testingAds, HaxeObject callback, String interstitialID) {
 		Log.d(TAG, "init: begins");
 		_callback = callback;
+		if(testingAds) useTestingAds();
+		FacebookAds.interstitialID = interstitialID;
 		Extension.mainActivity.runOnUiThread(new Runnable() {
 			public void run() {
+				AdSettings.addTestDevice("4c9b83f0aceabecbde1c1e1f5117d065");
 				cacheInterstitial();
 				Log.d(TAG, "init: complete");
 			}
@@ -62,7 +66,7 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 	
 	private static void cacheInterstitial() {
 		Log.d(TAG, "cacheInterstitial: begin");
-		interstitialAd = new InterstitialAd(this, YOUR_PLACEMENT_ID);
+		interstitialAd = new InterstitialAd(Extension.mainActivity, FacebookAds.interstitialID);
 		interstitialAd.setAdListener(getInstance());
 		interstitialAd.loadAd();				
 		Log.d(TAG, "cacheInterstitial: end");
@@ -77,8 +81,10 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 		});
 	}
 
-	public static void enableTesting(boolean enable) {
-	
+	private static void useTestingAds() {
+		String id = Extension.mainActivity.getApplicationContext().getSharedPreferences("FBAdPrefs", 0).getString("deviceIdHash", null);
+		Log.d(TAG,"Enabling Testing Ads for hashID: "+id);
+		AdSettings.addTestDevice(id);
 	}
 
 	///////////////////////////////////////////////////////////////////////////
