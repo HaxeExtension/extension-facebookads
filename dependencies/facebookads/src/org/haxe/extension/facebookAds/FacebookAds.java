@@ -6,66 +6,73 @@ import android.widget.RelativeLayout;
 import org.haxe.extension.Extension;
 import org.haxe.lime.HaxeObject;
 
-import com.amazon.device.ads.*;
+import com.facebook.ads.*;
 
-public class FacebookAds extends Extension
+public class FacebookAds extends Extension implements InterstitialAdListener
 {
 
-	protected static HaxeObject _callback = null;
-	static final String TAG = "FacebookAds";
-	
-	public static void init(String appID, HaxeObject callback)
-	{
-		_callback = callback;
-		Extension.mainActivity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
+	///////////////////////////////////////////////////////////////////////////
+	// INSTANCE STUFF
+	///////////////////////////////////////////////////////////////////////////
 
+	protected static FacebookAds instance = null;
+	
+	protected static FacebookAds getInstance(){
+		if(instance == null) instance = new FacebookAds();
+		return instance;
+	}
+
+	protected FacebookAds () { }
+
+	///////////////////////////////////////////////////////////////////////////
+	// STATIC STUFF
+	///////////////////////////////////////////////////////////////////////////
+
+	protected static HaxeObject _callback = null;
+	protected static InterstitialAd interstitialAd;
+	protected static final String TAG = "FacebookAds";
+	protected static AdView adView;
+	
+	public static void init(HaxeObject callback) {
+		Log.d(TAG, "init: begins");
+		_callback = callback;
+		Extension.mainActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				cacheInterstitial();
+				Log.d(TAG, "init: complete");
 			}
 		});
-		
-		Log.d(TAG, "init: "+callback);
 	}
 	
-	public static void showAd()
-	{
-		Extension.mainActivity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
+	public static void showAd() {
+		Extension.mainActivity.runOnUiThread(new Runnable() {
+			public void run() {
 				
 			}
 		});
 	}
 	
 	public static void hideAd() {
-		Extension.mainActivity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				
+		Extension.mainActivity.runOnUiThread(new Runnable() {
+			public void run() {
+
 			}
 		});
 	}
 	
-	public static void cacheInterstitial() {
-		Extension.mainActivity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				
-			}
-		});
+	private static void cacheInterstitial() {
+		Log.d(TAG, "cacheInterstitial: begin");
+		interstitialAd = new InterstitialAd(this, YOUR_PLACEMENT_ID);
+		interstitialAd.setAdListener(getInstance());
+		interstitialAd.loadAd();				
+		Log.d(TAG, "cacheInterstitial: end");
 	}
 
-	public static void showInterstitial()
-	{
-		Extension.mainActivity.runOnUiThread(new Runnable()
-		{
-			public void run()
-			{
-				
+	public static void showInterstitial() {
+		Extension.mainActivity.runOnUiThread(new Runnable() {
+			public void run() {
+				interstitialAd.show();
+				cacheInterstitial();
 			}
 		});
 	}
@@ -74,9 +81,51 @@ public class FacebookAds extends Extension
 	
 	}
 
+	///////////////////////////////////////////////////////////////////////////
+	// FACBEOOK EVENTS
+	///////////////////////////////////////////////////////////////////////////
+
+	@Override
+	public void onError(Ad ad, AdError error) {
+	    // Ad failed to load
+		Log.d(TAG, "onError: call");
+	}
+
+	@Override
+	public void onAdLoaded(Ad ad) {
+		// Ad is loaded and ready to be displayed  
+		// You can now display the full screen ad using this code:      
+		// ad.show();
+		Log.d(TAG, "onAdLoaded: call");
+	}
+
+	@Override
+	public void onInterstitialDisplayed(Ad ad) {
+		// Where relevant, use this function to pause your app's flow
+		Log.d(TAG, "onInterstitialDisplayed: call");
+	}
+
+	@Override
+	public void onInterstitialDismissed(Ad ad) {
+		// Use this function to resume your app's flow
+		Log.d(TAG, "onInterstitialDismissed: call");
+	}
+
+	@Override
+	public void onAdClicked(Ad ad) {
+		// Use this function as indication for a user's click on the ad.
+		Log.d(TAG, "onAdClicked: call");
+	}
+
+	///////////////////////////////////////////////////////////////////////////
+	// EXTENSION EVENTS
+	///////////////////////////////////////////////////////////////////////////
+
 	@Override
 	public void onDestroy()	{
-
+		if (interstitialAd != null) {
+			interstitialAd.destroy();
+		}
 	}
 
 }
