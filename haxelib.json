@@ -1,0 +1,10 @@
+{
+	"name": "extension-facebookads",
+	"url": "https://github.com/sempaigames/extension-facebookads",
+	"license": "MIT",
+	"tags": ["openfl", "amazon", "ads"],
+	"description": "Facebook Audience Network (ads) extension for Lime/OpenFL.",
+	"version": "0.0.1",
+	"releasenote": "First commit",
+	"contributors": ["fbricker"]
+}
