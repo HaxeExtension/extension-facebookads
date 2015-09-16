@@ -94,7 +94,7 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 	@Override
 	public void onError(Ad ad, AdError error) {
 	    // Ad failed to load
-		Log.d(TAG, "onError: call");
+		Log.e(TAG, "onError: (code "+error.getErrorCode()+") "+error.getErrorMessage());
 	}
 
 	@Override
