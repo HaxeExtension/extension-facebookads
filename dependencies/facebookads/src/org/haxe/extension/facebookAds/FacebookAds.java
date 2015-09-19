@@ -61,7 +61,7 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 		});
 	}
 	
-	public static void showAd() {
+	public static void showBanner() {
 		Extension.mainActivity.runOnUiThread(new Runnable() {
 			public void run() {
 				adView.setVisibility(View.VISIBLE);
@@ -69,7 +69,7 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 		});
 	}
 	
-	public static void hideAd() {
+	public static void hideBanner() {
 		Extension.mainActivity.runOnUiThread(new Runnable() {
 			public void run() {
 				adView.setVisibility(View.GONE);

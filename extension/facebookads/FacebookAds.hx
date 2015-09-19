@@ -7,8 +7,8 @@ class FacebookAds {
 	private static var testingAds:Bool=false;
 
 	private static var __showInterstitial:Void->Bool = function() {return false;}
-	public static var showAd:Void->Void = function() {}
-	public static var hideAd:Void->Void = function() {}
+	public static var showBanner:Void->Void = function() {}
+	public static var hideBanner:Void->Void = function() {}
 
 	///////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
@@ -35,8 +35,8 @@ class FacebookAds {
 			var __init:Bool->FacebookAds->String->String->Void;
 			__init = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds","init","(ZLorg/haxe/lime/HaxeObject;Ljava/lang/String;Ljava/lang/String;)V");
 			__showInterstitial = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "showInterstitial", "()Z");
-			showAd = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "showAd", "()V");
-			hideAd = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "hideAd", "()V");
+			showBanner = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "showBanner", "()V");
+			hideBanner = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "hideBanner", "()V");
 			initialized = true;
 			__init(testingAds,null,bannerID,interstitialID);
 		} catch(e:Dynamic) {
