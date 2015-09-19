@@ -41,7 +41,6 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 		FacebookAds.interstitialID = interstitialID;
 		Extension.mainActivity.runOnUiThread(new Runnable() {
 			public void run() {
-				AdSettings.addTestDevice("4c9b83f0aceabecbde1c1e1f5117d065");
 				cacheInterstitial();
 				Log.d(TAG, "init: complete");
 			}
