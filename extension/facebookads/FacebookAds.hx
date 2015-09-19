@@ -6,7 +6,9 @@ class FacebookAds {
 	private static var initialized:Bool = false;
 	private static var testingAds:Bool=false;
 
-	private static var __showInterstitial:Void->Void = function(){}
+	private static var __showInterstitial:Void->Bool = function() {return false;}
+	public static var showAd:Void->Void = function() {}
+	public static var hideAd:Void->Void = function() {}
 
 	///////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
@@ -27,22 +29,17 @@ class FacebookAds {
 	///////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 
-	public static function init(interstitialID:String){
+	public static function init(bannerID:String,interstitialID:String) {
 		if(initialized) return;
-		try{
-			var __init:Bool->FacebookAds->String->Void;
-
-			trace("init 1");
-			__init = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds","init","(ZLorg/haxe/lime/HaxeObject;Ljava/lang/String;)V");
-			trace("init 2");
-			__showInterstitial = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "showInterstitial", "()V");
-			trace("init 3");
-
+		try {
+			var __init:Bool->FacebookAds->String->String->Void;
+			__init = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds","init","(ZLorg/haxe/lime/HaxeObject;Ljava/lang/String;Ljava/lang/String;)V");
+			__showInterstitial = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "showInterstitial", "()Z");
+			showAd = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "showAd", "()V");
+			hideAd = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "hideAd", "()V");
 			initialized = true;
-			__init(testingAds,null,interstitialID);
-			trace("init 4");
-
-		}catch(e:Dynamic){
+			__init(testingAds,null,bannerID,interstitialID);
+		} catch(e:Dynamic) {
 			trace("Error: "+e);
 		}
 	}
@@ -54,17 +51,19 @@ class FacebookAds {
 	private static var lastTimeInterstitial:Int = -60*1000;
 	private static var displayCallsCounter:Int = 0;
 	
-	public static function showInterstitial(minInterval:Int=60, minCallsBeforeDisplay:Int=0) {
+	public static function showInterstitial(minInterval:Int=60, minCallsBeforeDisplay:Int=0):Bool {
 		displayCallsCounter++;
-		if( (Lib.getTimer()-lastTimeInterstitial)<(minInterval*1000) ) return;
-		if( minCallsBeforeDisplay > displayCallsCounter ) return;
-		displayCallsCounter = 0;
-		lastTimeInterstitial = Lib.getTimer();
-		try{
-			__showInterstitial();
-		}catch(e:Dynamic){
+		if( (Lib.getTimer()-lastTimeInterstitial)<(minInterval*1000) ) return false;
+		if( minCallsBeforeDisplay > displayCallsCounter ) return false;
+		try {
+			if(!__showInterstitial()) return false;
+			displayCallsCounter = 0;
+			lastTimeInterstitial = Lib.getTimer();
+			return true;
+		} catch(e:Dynamic) {
 			trace("ShowInterstitial Exception: "+e);
 		}
+		return false;
 	}
 
 	////////////////////////////////////////////////////////////////////////////

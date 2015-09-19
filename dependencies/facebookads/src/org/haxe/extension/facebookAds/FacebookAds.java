@@ -5,7 +5,8 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import org.haxe.extension.Extension;
 import org.haxe.lime.HaxeObject;
-
+import android.widget.RelativeLayout.LayoutParams;
+import android.view.View;
 import com.facebook.ads.*;
 
 public class FacebookAds extends Extension implements InterstitialAdListener
@@ -17,7 +18,7 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 
 	protected static FacebookAds instance = null;
 	
-	protected static FacebookAds getInstance(){
+	protected static FacebookAds getInstance() {
 		if(instance == null) instance = new FacebookAds();
 		return instance;
 	}
@@ -30,17 +31,30 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 
 	protected static HaxeObject _callback = null;
 	protected static InterstitialAd interstitialAd;
-	protected static final String TAG = "FacebookAds";
 	protected static AdView adView;
 	protected static String interstitialID = null;
+	protected static String bannerID = null;
+	protected static boolean interstitialLoaded = false;
+	protected static final String TAG = "FacebookAds";
 
-	public static void init(boolean testingAds, HaxeObject callback, String interstitialID) {
+	public static void init(boolean testingAds, HaxeObject callback, String bannerID, String interstitialID) {
 		Log.d(TAG, "init: begins");
 		_callback = callback;
 		if(testingAds) useTestingAds();
 		FacebookAds.interstitialID = interstitialID;
+		FacebookAds.bannerID = bannerID;
 		Extension.mainActivity.runOnUiThread(new Runnable() {
 			public void run() {
+				// banner init
+				adView = new AdView(Extension.mainActivity.getApplicationContext(), FacebookAds.bannerID, AdSize.BANNER_HEIGHT_50);
+				LayoutParams params = new LayoutParams(
+					LayoutParams.MATCH_PARENT,
+					LayoutParams.MATCH_PARENT);					
+				Extension.mainActivity.addContentView(adView,params);
+				adView.loadAd();
+				adView.setVisibility(View.GONE);
+
+				// interstitial init
 				cacheInterstitial();
 				Log.d(TAG, "init: complete");
 			}
@@ -50,7 +64,7 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 	public static void showAd() {
 		Extension.mainActivity.runOnUiThread(new Runnable() {
 			public void run() {
-				
+				adView.setVisibility(View.VISIBLE);
 			}
 		});
 	}
@@ -58,26 +72,31 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 	public static void hideAd() {
 		Extension.mainActivity.runOnUiThread(new Runnable() {
 			public void run() {
-
+				adView.setVisibility(View.GONE);
 			}
 		});
 	}
 	
 	private static void cacheInterstitial() {
 		Log.d(TAG, "cacheInterstitial: begin");
+		interstitialLoaded = false;
 		interstitialAd = new InterstitialAd(Extension.mainActivity, FacebookAds.interstitialID);
 		interstitialAd.setAdListener(getInstance());
-		interstitialAd.loadAd();				
+		interstitialAd.loadAd();
 		Log.d(TAG, "cacheInterstitial: end");
 	}
 
-	public static void showInterstitial() {
+	public static boolean showInterstitial() {
+		if(!interstitialLoaded) return false;
 		Extension.mainActivity.runOnUiThread(new Runnable() {
 			public void run() {
-				interstitialAd.show();
-				cacheInterstitial();
+				if(interstitialLoaded){
+					interstitialAd.show();
+					cacheInterstitial();
+				}
 			}
 		});
+		return true;
 	}
 
 	private static void useTestingAds() {
@@ -101,25 +120,26 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 		// Ad is loaded and ready to be displayed  
 		// You can now display the full screen ad using this code:      
 		// ad.show();
-		Log.d(TAG, "onAdLoaded: call");
+		interstitialLoaded = true;
+		Log.d(TAG, "onAdLoaded");
 	}
 
 	@Override
 	public void onInterstitialDisplayed(Ad ad) {
 		// Where relevant, use this function to pause your app's flow
-		Log.d(TAG, "onInterstitialDisplayed: call");
+		Log.d(TAG, "onInterstitialDisplayed");
 	}
 
 	@Override
 	public void onInterstitialDismissed(Ad ad) {
 		// Use this function to resume your app's flow
-		Log.d(TAG, "onInterstitialDismissed: call");
+		Log.d(TAG, "onInterstitialDismissed");
 	}
 
 	@Override
 	public void onAdClicked(Ad ad) {
 		// Use this function as indication for a user's click on the ad.
-		Log.d(TAG, "onAdClicked: call");
+		Log.d(TAG, "onAdClicked");
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -128,9 +148,10 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 
 	@Override
 	public void onDestroy()	{
-		if (interstitialAd != null) {
-			interstitialAd.destroy();
-		}
+		if (interstitialAd != null) interstitialAd.destroy();
+		if (adView != null) adView.destroy();
+		interstitialAd = null;
+		adView = null;
 	}
 
 }
