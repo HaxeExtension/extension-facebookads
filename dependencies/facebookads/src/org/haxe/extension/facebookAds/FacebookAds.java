@@ -36,6 +36,7 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 	protected static String bannerID = null;
 	protected static boolean interstitialLoaded = false;
 	protected static final String TAG = "FacebookAds";
+	protected static boolean bannerVisible = false;
 
 	public static void init(boolean testingAds, HaxeObject callback, String bannerID, String interstitialID) {
 		Log.d(TAG, "init: begins");
@@ -51,7 +52,6 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 					LayoutParams.MATCH_PARENT,
 					LayoutParams.MATCH_PARENT);					
 				Extension.mainActivity.addContentView(adView,params);
-				adView.loadAd();
 				adView.setVisibility(View.GONE);
 
 				// interstitial init
@@ -62,17 +62,23 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 	}
 	
 	public static void showBanner() {
+		if(bannerVisible) return;
 		Extension.mainActivity.runOnUiThread(new Runnable() {
 			public void run() {
+				adView.loadAd();
 				adView.setVisibility(View.VISIBLE);
+				bannerVisible = true;
 			}
 		});
 	}
 	
 	public static void hideBanner() {
+		if(!bannerVisible) return;
 		Extension.mainActivity.runOnUiThread(new Runnable() {
 			public void run() {
+				adView.disableAutoRefresh();
 				adView.setVisibility(View.GONE);
+				bannerVisible = false;
 			}
 		});
 	}
