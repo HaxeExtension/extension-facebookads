@@ -2,11 +2,11 @@ package org.haxe.extension.facebookAds;
 
 import android.util.Log;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 import org.haxe.extension.Extension;
 import org.haxe.lime.HaxeObject;
-import android.widget.RelativeLayout.LayoutParams;
+import android.widget.FrameLayout;
 import android.view.View;
+import android.view.Gravity;
 import com.facebook.ads.*;
 
 public class FacebookAds extends Extension implements InterstitialAdListener
@@ -38,7 +38,7 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 	protected static final String TAG = "FacebookAds";
 	protected static boolean bannerVisible = false;
 
-	public static void init(boolean testingAds, HaxeObject callback, String bannerID, String interstitialID) {
+	public static void init(boolean testingAds, HaxeObject callback, String bannerID, String interstitialID, final boolean alignTop) {
 		Log.d(TAG, "init: begins");
 		_callback = callback;
 		if(testingAds) useTestingAds();
@@ -48,9 +48,16 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 			public void run() {
 				// banner init
 				adView = new AdView(Extension.mainActivity.getApplicationContext(), FacebookAds.bannerID, AdSize.BANNER_HEIGHT_50);
-				LayoutParams params = new LayoutParams(
-					LayoutParams.MATCH_PARENT,
-					LayoutParams.MATCH_PARENT);					
+				FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(
+					FrameLayout.LayoutParams.MATCH_PARENT,
+					FrameLayout.LayoutParams.WRAP_CONTENT);
+				
+				if(alignTop) {
+					params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.TOP;
+				} else {
+					params.gravity = Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM;
+				}
+
 				Extension.mainActivity.addContentView(adView,params);
 				adView.setVisibility(View.GONE);
 

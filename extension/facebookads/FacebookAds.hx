@@ -29,16 +29,16 @@ class FacebookAds {
 	///////////////////////////////////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 
-	public static function init(bannerID:String,interstitialID:String) {
+	public static function init(bannerID:String,interstitialID:String,alignTop:Bool) {
 		if(initialized) return;
 		try {
-			var __init:Bool->FacebookAds->String->String->Void;
-			__init = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds","init","(ZLorg/haxe/lime/HaxeObject;Ljava/lang/String;Ljava/lang/String;)V");
+			var __init:Bool->FacebookAds->String->String->Bool->Void;
+			__init = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds","init","(ZLorg/haxe/lime/HaxeObject;Ljava/lang/String;Ljava/lang/String;Z)V");
 			__showInterstitial = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "showInterstitial", "()Z");
 			showBanner = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "showBanner", "()V");
 			hideBanner = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "hideBanner", "()V");
 			initialized = true;
-			__init(testingAds,null,bannerID,interstitialID);
+			__init(testingAds,null,bannerID,interstitialID,alignTop);
 		} catch(e:Dynamic) {
 			trace("Error: "+e);
 		}
