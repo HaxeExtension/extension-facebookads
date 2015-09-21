@@ -59,6 +59,30 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 				}
 
 				Extension.mainActivity.addContentView(adView,params);
+
+				adView.setAdListener(new AdListener() {
+					@Override
+					public void onError(Ad ad, AdError error) {
+						// Ad failed to load. 
+						// Add code to hide the ad's view
+						Log.d(TAG, "onError (banner)");
+					}
+
+					@Override
+					public void onAdLoaded(Ad ad) {
+						// Ad was loaded
+						// Add code to show the ad's view
+						Log.d(TAG, "onAdLoaded (banner)");
+					}
+
+					@Override
+					public void onAdClicked(Ad ad) {
+						// Use this function to detect when an ad was clicked.
+						Log.d(TAG, "onAdClicked (banner)");
+					}
+				});
+
+				//adView.loadAd();
 				adView.setVisibility(View.GONE);
 
 				// interstitial init
