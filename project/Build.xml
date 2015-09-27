@@ -9,7 +9,7 @@
 		<file name="ios/FBAds.mm" />
 	</files>
 	
-	<target id="NDLL" output="${LIBPREFIX}facebookads${debug_extra}${LIBEXTRA}" tool="linker" toolid="${STD_MODULE_LINK}">
+	<target id="NDLL" output="${LIBPREFIX}facebookadsex${debug_extra}${LIBEXTRA}" tool="linker" toolid="${STD_MODULE_LINK}">
 	 			
 		<outdir name="../ndll/${BINDIR}"/>
 		<ext value=".ndll" if="windows || mac || linux" />
