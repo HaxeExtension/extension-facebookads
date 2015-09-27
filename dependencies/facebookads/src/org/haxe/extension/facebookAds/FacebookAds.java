@@ -65,20 +65,20 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 					public void onError(Ad ad, AdError error) {
 						// Ad failed to load. 
 						// Add code to hide the ad's view
-						Log.d(TAG, "onError (banner)");
+						Log.e(TAG, "onError [banner]: (code "+error.getErrorCode()+") "+error.getErrorMessage());
 					}
 
 					@Override
 					public void onAdLoaded(Ad ad) {
 						// Ad was loaded
 						// Add code to show the ad's view
-						Log.d(TAG, "onAdLoaded (banner)");
+						Log.d(TAG, "onAdLoaded [banner]");
 					}
 
 					@Override
 					public void onAdClicked(Ad ad) {
 						// Use this function to detect when an ad was clicked.
-						Log.d(TAG, "onAdClicked (banner)");
+						Log.d(TAG, "onAdClicked [banner]");
 					}
 				});
 
@@ -149,7 +149,7 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 	@Override
 	public void onError(Ad ad, AdError error) {
 	    // Ad failed to load
-		Log.e(TAG, "onError: (code "+error.getErrorCode()+") "+error.getErrorMessage());
+		Log.e(TAG, "onError [interstitial]: (code "+error.getErrorCode()+") "+error.getErrorMessage());
 	}
 
 	@Override
@@ -158,25 +158,25 @@ public class FacebookAds extends Extension implements InterstitialAdListener
 		// You can now display the full screen ad using this code:      
 		// ad.show();
 		interstitialLoaded = true;
-		Log.d(TAG, "onAdLoaded");
+		Log.d(TAG, "onAdLoaded [interstitial]");
 	}
 
 	@Override
 	public void onInterstitialDisplayed(Ad ad) {
 		// Where relevant, use this function to pause your app's flow
-		Log.d(TAG, "onInterstitialDisplayed");
+		Log.d(TAG, "onInterstitialDisplayed [interstitial]");
 	}
 
 	@Override
 	public void onInterstitialDismissed(Ad ad) {
 		// Use this function to resume your app's flow
-		Log.d(TAG, "onInterstitialDismissed");
+		Log.d(TAG, "onInterstitialDismissed [interstitial]");
 	}
 
 	@Override
 	public void onAdClicked(Ad ad) {
 		// Use this function as indication for a user's click on the ad.
-		Log.d(TAG, "onAdClicked");
+		Log.d(TAG, "onAdClicked [interstitial]");
 	}
 
 	///////////////////////////////////////////////////////////////////////////

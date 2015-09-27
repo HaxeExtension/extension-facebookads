@@ -1,5 +1,7 @@
 ﻿package extension.facebookads;
+#if android
 import openfl.utils.JNI;
+#end
 import openfl.Lib;
 
 class FacebookAds {
@@ -31,17 +33,32 @@ class FacebookAds {
 
 	public static function init(bannerID:String,interstitialID:String,alignTop:Bool) {
 		if(initialized) return;
-		try {
-			var __init:Bool->FacebookAds->String->String->Bool->Void;
-			__init = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds","init","(ZLorg/haxe/lime/HaxeObject;Ljava/lang/String;Ljava/lang/String;Z)V");
-			__showInterstitial = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "showInterstitial", "()Z");
-			showBanner = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "showBanner", "()V");
-			hideBanner = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "hideBanner", "()V");
-			initialized = true;
-			__init(testingAds,null,bannerID,interstitialID,alignTop);
-		} catch(e:Dynamic) {
-			trace("Error: "+e);
-		}
+		initialized = true;
+		#if android
+			try {
+				var __init:Bool->FacebookAds->String->String->Bool->Void;
+				__init = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds","init","(ZLorg/haxe/lime/HaxeObject;Ljava/lang/String;Ljava/lang/String;Z)V");
+				__showInterstitial = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "showInterstitial", "()Z");
+				showBanner = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "showBanner", "()V");
+				hideBanner = JNI.createStaticMethod("org/haxe/extension/facebookAds/FacebookAds", "hideBanner", "()V");
+				__init(testingAds,null,bannerID,interstitialID,alignTop);
+			} catch(e:Dynamic) {
+				trace("Error: "+e);
+			}
+		#elseif ios
+			try{
+				// CPP METHOD LINKING
+				var __init:String->String->Bool->Bool->Void;
+				__init = cpp.Lib.load("facebookAdsEx","facebookadsex_init",4);
+				showBanner = cpp.Lib.load("facebookAdsEx","facebookadsex_banner_show",0);
+				hideBanner = cpp.Lib.load("facebookAdsEx","facebookadsex_banner_hide",0);
+				__showInterstitial = cpp.Lib.load("facebookAdsEx","facebookadsex_interstitial_show",0);
+				//__refresh = cpp.Lib.load("facebookAdsEx","facebookadsex_banner_refresh",0);
+				__init(bannerID,interstitialID,alignTop,testingAds);
+			}catch(e:Dynamic){
+				trace("iOS INIT Exception: "+e);
+			}
+		#end
 	}
 
 	////////////////////////////////////////////////////////////////////////////

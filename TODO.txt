@@ -1,0 +1,11 @@
+iOS:
+Gravity
+hacer q recargue si falla
+hacer DISABLE AUTO REFRESH a los banners adView.disableAutoRefresh() (en IOS)
+Testear bien
+
+ANDROID:
+VER SI HACE FALTA DESACTIVAR EL RELOAD DE AVISOS EN ANDROID (PARECE Q NO)
+Testear bien
+hacer q recargue si falla
+

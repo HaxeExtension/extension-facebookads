@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
-	<dependency name="facebookads" path="dependencies/facebookads" if="android" />
-	<!--android extension="org.haxe.extension.facebookAds.FacebookAds" /-->
+	<section if="android">
+		<dependency name="facebookads" path="dependencies/facebookads" />
+		<!--android extension="org.haxe.extension.facebookAds.FacebookAds" /-->
+	</section>
+	<section if="ios">
+		<ndll name="facebookads" />
+		<dependency path="frameworks/FacebookAds.framework" />
+	</section>
+
 </project>
