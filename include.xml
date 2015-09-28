@@ -10,6 +10,7 @@
 		<dependency path="frameworks/FBAudienceNetwork.framework" />
 		<dependency name="AdSupport.framework" />
 		<dependency name="StoreKit.framework" />
+		<dependency name="CoreMedia.framework" />
 		<dependency name="CoreMotion.framework" />
 	</section>
 
