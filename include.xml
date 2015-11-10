@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
 	<section if="android">
+		<haxelib name="extension-android-support-v4" />
 		<dependency name="facebookads" path="dependencies/facebookads" />
 		<!--android extension="org.haxe.extension.facebookAds.FacebookAds" /-->
 	</section>
