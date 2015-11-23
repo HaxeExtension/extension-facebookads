@@ -4,10 +4,10 @@
 	"license": "MIT",
 	"tags": ["openfl", "amazon", "ads", "android", "iOS"],
 	"description": "Facebook Audience Network (ads) extension for Lime/OpenFL (Android + iOS).",
-	"version": "0.1.2",
+	"version": "0.1.3",
 	"dependencies": {
 		"extension-android-support-v4": ""
 	},
-	"releasenote": "Use android-support-v4 from specific extension.",
+	"releasenote": "Upgrade Facebook AndroidSDK to version 4.8.1.",
 	"contributors": ["fbricker"]
 }
