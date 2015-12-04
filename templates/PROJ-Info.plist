@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>::APP_TITLE::</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleIdentifier</key>
+	<string>::APP_PACKAGE::</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundlePackageType</key>
+	<string>APPL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>::APP_VERSION::</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleVersion</key>
+	<string>::APP_BUILD_NUMBER::</string>
+	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>UIRequiredDeviceCapabilities</key>
+	<dict>
+		::foreach REQUIRED_CAPABILITY::
+			<key>::name::</key>
+			::if value::<true/>::else::<false/>::end::
+		::end::
+	</dict>
+	<key>UIStatusBarHidden</key>
+	<::WIN_FULLSCREEN::/>
+	<key>FacebookAppID</key>
+	<string>::ENV_FACEBOOK_APP_ID::</string>
+	<key>FacebookDisplayName</key>
+	<string>::ENV_FACEBOOK_DISPLAY_NAME::</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb::ENV_FACEBOOK_APP_ID::</string>
+			</array>
+		</dict>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<::!WIN_FULLSCREEN::/>
+	::if (IOS_APP_ORIENTATION != null)::
+	<key>UISupportedInterfaceOrientations</key>
+	::IOS_APP_ORIENTATION::::end::
+
+	<key>NSAppTransportSecurity</key>
+		<dict>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>facebook.com</key>
+			<dict>
+				<key>NSIncludesSubdomains</key> <true/>
+				<key>NSExceptionRequiresForwardSecrecy</key> <false/>
+			</dict>
+			<key>fbcdn.net</key>
+			<dict>
+				<key>NSIncludesSubdomains</key> <true/>
+				<key>NSExceptionRequiresForwardSecrecy</key>  <false/>
+			</dict>
+			<key>akamaihd.net</key>
+			<dict>
+				<key>NSIncludesSubdomains</key> <true/>
+				<key>NSExceptionRequiresForwardSecrecy</key> <false/>
+			</dict>
+		</dict>
+	</dict>
+
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+			<string>fb-messenger-api20140430</string>
+			<string>fb-messenger-api</string>
+			<string>fbapi20130214</string>
+			<string>fbapi20130410</string>
+			<string>fbapi20130702</string>
+			<string>fbapi20131010</string>
+			<string>fbapi20131219</string>    
+			<string>fbapi20140116</string>
+			<string>fbapi20140410</string>
+			<string>fbapi20150313</string>
+			<string>fbapi20150629</string>
+			<string>fbapi</string>
+			<string>fbauth2</string>
+			<string>fbauth</string>
+			<string>fbshareextension</string>
+	</array>
+
+</dict>
+</plist>

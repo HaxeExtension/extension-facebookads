@@ -13,6 +13,7 @@
 		<dependency name="StoreKit.framework" />
 		<dependency name="CoreMedia.framework" />
 		<dependency name="CoreMotion.framework" />
+		<template path="templates/PROJ-Info.plist" rename="${APP_TITLE}-Info.plist" />
 	</section>
 
 </project>
