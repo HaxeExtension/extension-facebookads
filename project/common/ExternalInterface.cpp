@@ -46,8 +46,7 @@ DEFINE_ENTRY_POINT (facebookadsex_main);
 
 
 static value facebookadsex_interstitial_show(){
-	showInterstitial();
-	return alloc_null();
+	return alloc_bool(showInterstitial());
 }
 DEFINE_PRIM(facebookadsex_interstitial_show,0);
 

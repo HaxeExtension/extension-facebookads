@@ -4,7 +4,7 @@ cd "$dir"
 PKG_NAME="extension-facebookads"
 
 rm -rf project/obj
-lime rebuild . ios
+lime rebuild . ios || exit
 rm -rf project/obj
 
 rm -f "$PKG_NAME.zip"

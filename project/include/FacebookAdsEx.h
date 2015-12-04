@@ -9,7 +9,7 @@ namespace facebookadsex {
 	void showBanner();
 	void hideBanner();
 	void refreshBanner();
-	void showInterstitial();
+	bool showInterstitial();
 	
 }
 

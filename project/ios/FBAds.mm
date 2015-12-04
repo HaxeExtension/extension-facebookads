@@ -2,14 +2,11 @@
 #import <UIKit/UIKit.h>
 #import <FBAudienceNetwork/FBAudienceNetwork.h>
 
-@interface FBInterstitialView : UIViewController <FBInterstitialAdDelegate>
+@interface FBInterstitialView : NSObject <FBInterstitialAdDelegate>
 {
 	FBInterstitialAd *interstitialAd;
 	NSString *PLACEMENT_ID;
-	//- (id)initWithID:(NSString*)ID;
-	//- (void) loadInterstital;
-	//- (void)interstitialAdDidLoad:(FBInterstitialAd *)interstitialAd;
-	//- (void)interstitialAd:(FBInterstitialAd *)interstitialAd didFailWithError:(NSError *)error;
+	FBInterstitialAd *loadedAd;
 }
 @end
 
@@ -18,15 +15,25 @@
 
 - (id)initWithID:(NSString*)ID {
 	self = [super init];
-	NSLog(@"FacebookAdsEx Init");
+	loadedAd = nil;
 	if(!self) return nil;
 	PLACEMENT_ID = ID;
 	return self;
 }
 
+- (bool) showInterstitial
+{
+	if(loadedAd==nil) return false;
+	UIViewController *root = [[[UIApplication sharedApplication] keyWindow] rootViewController];
+	// You can now display the full screen ad using this code:
+	[loadedAd showAdFromRootViewController:root];
+	[self loadInterstital];
+	return true;
+}
 
 - (void) loadInterstital
 {
+	loadedAd = nil;
 	interstitialAd = [[FBInterstitialAd alloc] initWithPlacementID:PLACEMENT_ID];
 	interstitialAd.delegate = self;
 	[interstitialAd loadAd];
@@ -34,14 +41,13 @@
 
 - (void)interstitialAdDidLoad:(FBInterstitialAd *)ad
 {
+	loadedAd = ad;
 	NSLog(@"Ad is loaded and ready to be displayed");
-
-	// You can now display the full screen ad using this code:
-	[ad showAdFromRootViewController:self];
 }
 
 - (void)interstitialAd:(FBInterstitialAd *)ad didFailWithError:(NSError *)error
 {
+	loadedAd = nil;
 	NSLog(@"Ad failed to load");
 }
 
@@ -69,10 +75,8 @@
 namespace facebookadsex {
 	
 	static FBInterstitialView *interstitial;
-	//UIViewController *root;
 	
 	void init(const char *__BannerID, const char *__InterstitialID, bool alignTop, bool testingAds){
-		//root = [[[UIApplication sharedApplication] keyWindow] rootViewController];
 		NSString *bannerID = [NSString stringWithUTF8String:__BannerID];
 		NSString *interstitialID = [NSString stringWithUTF8String:__InterstitialID];
 
@@ -96,9 +100,9 @@ namespace facebookadsex {
 //		[bannerView loadRequest:[GADRequest request]];
 	}
 
-	void showInterstitial(){
-//		if(interstitialListener!=nil) [interstitialListener show];
-//		interstitialListener = [[InterstitialListener alloc] initWithID:interstitialID];
+	bool showInterstitial(){
+		if(interstitial == nil ) return false;
+		return [interstitial showInterstitial];
 	}
 
 }
