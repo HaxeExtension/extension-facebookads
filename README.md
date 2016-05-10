@@ -5,9 +5,6 @@ FacebookAds Extension (Facebook Audience Network (ads) extension.)
 More info on Facebook Audience Network: https://developers.facebook.com/docs/audience-network
 
 
-(Under development...)
-
-
 ###How to Install
 
 To install this library, you can simply get the library from haxelib like this:
