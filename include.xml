@@ -2,6 +2,7 @@
 <project>
 	<section if="android">
 		<haxelib name="extension-android-support-v4" />
+		<haxelib name="extension-googleplayservices-lib" />
 		<dependency name="facebookads" path="dependencies/facebookads" />
 		<!--android extension="org.haxe.extension.facebookAds.FacebookAds" /-->
 	</section>
