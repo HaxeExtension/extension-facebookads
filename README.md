@@ -30,7 +30,6 @@ If you're having issues, here are some points you should check if you're not get
 If you're having issues compiling you game after installing this extension, you should:
 
 1. check the proper installation of extension-android-support-v4
-2. check the proper installation of extension-googleplayservices-lib _(optional according to facebook)_.
 
 ###Disclaimer
 
