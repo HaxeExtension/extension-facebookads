@@ -9,6 +9,7 @@
 		<ios deployment="7.0"/> 
 		<ndll name="facebookadsex" />
 		<dependency path="frameworks/FBAudienceNetwork.framework" />
+		<dependency name="libxml2.tbd" />
 		<dependency name="AdSupport.framework" />
 		<dependency name="StoreKit.framework" />
 		<dependency name="CoreMedia.framework" />

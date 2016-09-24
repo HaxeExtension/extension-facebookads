@@ -18,6 +18,8 @@
 
 #import <UIKit/UIKit.h>
 
+// NOTE: Any changes should also be made to the module.modulemap
+// to ensure comptability with Swift apps using Cocoapods
 #import <FBAudienceNetwork/FBAdChoicesView.h>
 #import <FBAudienceNetwork/FBAdDefines.h>
 #import <FBAudienceNetwork/FBAdSettings.h>
@@ -25,10 +27,12 @@
 #import <FBAudienceNetwork/FBInterstitialAd.h>
 #import <FBAudienceNetwork/FBMediaView.h>
 #import <FBAudienceNetwork/FBNativeAd.h>
+#import <FBAudienceNetwork/FBNativeAdCollectionViewAdProvider.h>
+#import <FBAudienceNetwork/FBNativeAdCollectionViewCellProvider.h>
 #import <FBAudienceNetwork/FBNativeAdScrollView.h>
 #import <FBAudienceNetwork/FBNativeAdTableViewAdProvider.h>
 #import <FBAudienceNetwork/FBNativeAdTableViewCellProvider.h>
 #import <FBAudienceNetwork/FBNativeAdView.h>
 #import <FBAudienceNetwork/FBNativeAdsManager.h>
 
-#define FB_AD_SDK_VERSION @"4.6.0"
+#define FB_AD_SDK_VERSION @"4.15.1"

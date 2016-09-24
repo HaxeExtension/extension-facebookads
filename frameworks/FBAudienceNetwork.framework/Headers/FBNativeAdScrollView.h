@@ -22,6 +22,8 @@
 #import "FBNativeAdView.h"
 #import "FBNativeAdsManager.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol FBNativeAdView;
 
 /*!
@@ -30,12 +32,12 @@
  @discussion
  If adding this view to a XIB or Storyboard, you may recieve the error "Unknown class FBNativeAdScrollView in Interface Builder file" in some cases. This error is caused by the linker failing to include FBNativeAdScrollView in your build. To resolve this, call [FBNativeAdScrollView class] in your project, or add "-all_load -ObjC" to "Other Linker Flags" in your project settings.
  */
-FB_CLASS_EXPORT
+FB_CLASS_EXPORT FB_SUBCLASSING_RESTRICTED
 @interface FBNativeAdScrollView : UIView
 
 /*!
  @property
- @abstract Maximum native ads that this scroll view will load. Defaults to 5. If changed after calling loadAds, all current ads will be discarded and loadAds must be called again.
+ @abstract Maximum native ads that this scroll view will load. Defaults to 10. If changed after calling loadAds, all current ads will be discarded and loadAds must be called again.
  */
 @property (nonatomic, assign, readonly) NSUInteger maximumNativeAdCount;
 
@@ -125,3 +127,5 @@ FB_CLASS_EXPORT
                                      withMaximum:(NSUInteger)maximumNativeAdCount NS_DESIGNATED_INITIALIZER;
 
 @end
+
+NS_ASSUME_NONNULL_END
