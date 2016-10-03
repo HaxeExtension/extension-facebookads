@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project>
 	<section if="android">
-		<haxelib name="extension-android-support-v4" />
+		<section unless="openfl-legacy || openfl-next">
+			<set name="support-v4" />
+			<haxelib name="google-play-services" />
+		</section>
+		<section if="openfl-legacy || openfl-next">
+			<haxelib name="extension-android-support-v4" />
+		</section>
 		<dependency name="facebookads" path="dependencies/facebookads" />
 		<!--android extension="org.haxe.extension.facebookAds.FacebookAds" /-->
 	</section>
