@@ -2,8 +2,7 @@
 <project>
 	<section if="android">
 		<section unless="openfl-legacy || openfl-next">
-			<set name="support-v4" />
-			<haxelib name="google-play-services" />
+			<set name="supportLibraryVersion" value="+" unless="supportLibraryVersion" />
 		</section>
 		<section if="openfl-legacy || openfl-next">
 			<haxelib name="extension-android-support-v4" />
