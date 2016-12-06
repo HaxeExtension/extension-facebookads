@@ -2,6 +2,7 @@
 <project>
 	<section if="android">
 		<section unless="openfl-legacy || openfl-next">
+			<echo value="ALERT: Setting Android Support Library to the last version on your SDK. Please read how to upgrade and choose your version here: https://github.com/player-03/google-play-services" unless="supportLibraryVersion" />
 			<set name="supportLibraryVersion" value="+" unless="supportLibraryVersion" />
 		</section>
 		<section if="openfl-legacy || openfl-next">
