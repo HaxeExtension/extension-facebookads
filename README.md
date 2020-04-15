@@ -5,7 +5,7 @@ FacebookAds Extension (Facebook Audience Network (ads) extension.)
 More info on Facebook Audience Network: https://developers.facebook.com/docs/audience-network
 
 
-###How to Install
+### How to Install
 
 To install this library, you can simply get the library from haxelib like this:
 ```bash
@@ -17,7 +17,7 @@ Once this is done, you just need to add this to your project.xml
 <haxelib name="extension-facebookads" />
 ```
 
-###Troubleshooting (checklist)
+### Troubleshooting (checklist)
 If you're having issues, here are some points you should check if you're not getting ads:
 
 1. Is your game already enabled on facebook audience network? _(note that facebook requires the game to be manually authorized on their network before you can get ADS)_.
@@ -31,12 +31,12 @@ If you're having issues compiling you game after installing this extension, you 
 
 1. check the proper installation of extension-android-support-v4
 
-###Disclaimer
+### Disclaimer
 
 Facebook is a registered trademark of Facebook Inc.
 http://unibrander.com/united-states/221811US/facebook.html
 
-###License
+### License
 
 The MIT License (MIT) - [LICENSE.md](LICENSE.md)
 
